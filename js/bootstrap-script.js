@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < 25; i++) {
             const cell = document.createElement('div');
             cell.classList.add('bingo-cell');
-            
             // Add the free space in the center
             if (i === 12) {
                 cell.classList.add('free');
@@ -165,8 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const particleCount = 50 * (timeLeft / duration);
             
-            // Canadian colors for confetti (red and white with accent colors)
-            const colors = ['#D91D25', '#FFFFFF', '#000000', '#008A17'];
+            // Canadian colors for confetti (red and white)
+            const colors = ['#D91D25', '#FFFFFF', '#000000'];
             
             // Confetti burst from both sides
             confetti(Object.assign({}, defaults, {

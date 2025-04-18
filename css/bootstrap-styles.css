@@ -1,14 +1,4 @@
-/* Canadian color theme variables */
-:root {
-    --bs-primary: #D91D25;  /* Canadian red */
-    --bs-primary-rgb: 217, 29, 37;
-    --bs-danger: #D91D25;   /* Canadian red */
-    --bs-danger-rgb: 217, 29, 37;
-    --bs-secondary: #000000; /* Black as secondary color */
-    --bs-success: #008A17;  /* Green for accent */
-    --bs-white: #FFFFFF;    /* White */
-    --bs-white-rgb: 255, 255, 255;
-}
+/* Custom CSS that builds on your existing design */
 
 body {
     font-family: 'Lato', sans-serif;
@@ -17,14 +7,21 @@ body {
 
 h1 {
     font-family: 'Merriweather', serif;
-    color: var(--bs-danger);
+    font-size: 2.25rem;
+}
+
+/* Make buttons match your current design */
+.btn-danger {
+    background-color: #D91D25;
+    border-color: #D91D25;
+}
+
+.btn-danger:hover {
+    background-color: #c01921;
+    border-color: #c01921;
 }
 
 /* Bingo title styling */
-.bingo-title .row {
-    margin: 0;
-}
-
 .letter {
     display: flex;
     justify-content: center;
@@ -33,24 +30,25 @@ h1 {
     font-size: 1.75rem;
     font-weight: bold;
     color: white;
+    background-color: #D91D25;
     border-radius: 0.375rem;
 }
 
-/* Bingo card styling */
+/* Bingo card styling - keep your existing layout */
 .bingo-card {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 0.5rem;
+    gap: 8px;
 }
 
 .bingo-cell {
     aspect-ratio: 1;
     background-color: white;
-    border: 2px solid #7D7D7D; /* Neutral gray border */
+    border: 2px solid #7D7D7D;
     border-radius: 0.375rem;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     text-align: center;
     padding: 0.5rem;
     font-size: 0.85rem;
@@ -60,15 +58,14 @@ h1 {
 }
 
 .bingo-cell.marked {
-    background-color: var(--bs-primary);
+    background-color: #D91D25;
     color: white;
     transform: scale(0.98);
-    border-color: var(--bs-primary);
 }
 
 .bingo-cell.free {
-    background-color: #f1f1f1;
-    border: 2px dashed var(--bs-danger);
+    background-color: #f8f9fa;
+    border: 2px dashed #D91D25;
     cursor: default;
     display: flex;
     flex-direction: column;
@@ -78,72 +75,13 @@ h1 {
 
 .ballot-icon {
     font-size: 2rem;
-    color: var(--bs-danger);
+    color: #D91D25;
     margin-bottom: 0.25rem;
 }
 
 .free-text {
     font-weight: bold;
-    color: var(--bs-danger);
-}
-
-/* Animations */
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(var(--bs-primary-rgb), 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(var(--bs-primary-rgb), 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(var(--bs-primary-rgb), 0);
-    }
-}
-
-.bingo-cell:hover:not(.free) {
-    border-color: var(--bs-primary);
-    box-shadow: 0 0 5px rgba(var(--bs-primary-rgb), 0.5);
-}
-
-.bingo-cell.marked:hover {
-    background-color: #0c3d85;
-}
-
-/* Responsive adjustments */
-@media (max-width: 767.98px) {
-    .letter {
-        height: 40px;
-        font-size: 1.5rem;
-    }
-    
-    .bingo-cell {
-        font-size: 0.7rem;
-        padding: 0.35rem;
-    }
-}
-
-@media (max-width: 575.98px) {
-    .bingo-card {
-        gap: 0.25rem;
-    }
-    
-    .letter {
-        height: 35px;
-        font-size: 1.25rem;
-    }
-    
-    .bingo-cell {
-        font-size: 0.65rem;
-        padding: 0.25rem;
-    }
-    
-    .ballot-icon {
-        font-size: 1.5rem;
-    }
-    
-    .free-text {
-        font-size: 0.7rem;
-    }
+    color: #D91D25;
 }
 
 /* Winner modal styling */
@@ -154,3 +92,63 @@ h1 {
 .modal-footer {
     border-top: 0;
 }
+
+@media (max-width: 760px) {
+    
+    /* Smaller BINGO header letters */
+    .letter {
+      font-size: 1.2rem;
+      height: 35px;
+    }
+    
+    /* Smaller bingo cell text */
+    .bingo-cell {
+      font-size: 0.65rem;
+      padding: 3px;
+    }
+    
+    /* Adjust free space */
+    .ballot-icon {
+      font-size: 1.3rem;
+    }
+    
+    .free-text {
+      font-size: 0.7rem;
+    }
+    
+    /* Smaller gap between cells */
+    .bingo-card {
+      gap: 4px;
+    }
+
+  }
+
+  @media (max-width: 525px) {
+    
+    /* Smaller BINGO header letters */
+    .letter {
+      font-size: 1.0rem;
+      height: 30px;
+    }
+    
+    /* Smaller bingo cell text */
+    .bingo-cell {
+      font-size: 0.5rem;
+      padding: 3px;
+    }
+    
+    /* Adjust free space */
+    .ballot-icon {
+      font-size: 1.3rem;
+    }
+    
+    .free-text {
+      font-size: 0.7rem;
+    }
+    
+    /* Smaller gap between cells */
+    .bingo-card {
+      gap: 2px;
+    }
+
+  }
