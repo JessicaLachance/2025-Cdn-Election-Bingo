@@ -1,0 +1,234 @@
+:root {
+    --color-red: #D91D25;
+    --color-blue: #0F4B9E;
+    --color-white: #FFFFFF;
+    --color-grey: #EEEEEE;
+    --color-dark: #333333;
+    --color-green: #008A17;
+    --color-orange: #F28C1F;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
+    color: var(--color-dark);
+    background-color: var(--color-grey);
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-family: 'Merriweather', serif;
+    color: var(--color-red);
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: var(--color-dark);
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0B3A7D;
+}
+
+.bingo-container {
+    background-color: var(--color-white);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.bingo-title {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.letter {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.bingo-card {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.bingo-cell {
+    aspect-ratio: 1;
+    background-color: var(--color-white);
+    border: 2px solid var(--color-blue);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.bingo-cell.marked {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    transform: scale(0.98);
+}
+
+.bingo-cell.free {
+    background-color: var(--color-grey);
+    border: 2px dashed var(--color-red);
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ballot-icon {
+    width: 60%;
+    height: auto;
+    margin-bottom: 5px;
+    fill: var(--color-red);
+}
+
+.free-text {
+    font-weight: bold;
+    color: var(--color-red);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--color-white);
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 500px;
+    width: 80%;
+}
+
+.modal h2 {
+    color: var(--color-red);
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.modal p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    pointer-events: none;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: var(--color-blue);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .letter {
+        font-size: 1.5rem;
+        height: 40px;
+    }
+    
+    .bingo-cell {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        padding: 10px;
+    }
+    
+    .bingo-container {
+        padding: 10px;
+    }
+    
+    .bingo-card {
+        gap: 5px;
+    }
+    
+    .bingo-cell {
+        padding: 5px;
+        font-size: 0.7rem;
+    }
+}
