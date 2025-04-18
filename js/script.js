@@ -5,11 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const winnerModal = document.getElementById('winnerModal');
     const closeModalButton = document.getElementById('closeModal');
     
-    // Ballot SVG for the free space
+    // Ballot icon using Bootstrap Icons for the free space
     const ballotSvg = `
-    <svg class="ballot-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18,2 L6,2 C4.9,2 4,2.9 4,4 L4,20 C4,21.1 4.9,22 6,22 L18,22 C19.1,22 20,21.1 20,20 L20,4 C20,2.9 19.1,2 18,2 Z M6,4 L18,4 L18,8 L6,8 L6,4 Z M6,10 L18,10 L18,11 L6,11 L6,10 Z M6,13 L18,13 L18,14 L6,14 L6,13 Z M6,16 L13,16 L13,17 L6,17 L6,16 Z" fill="currentColor"/>
-    </svg>
+    <i class="bi bi-card-checklist ballot-icon"></i>
     <div class="free-text">FREE</div>
     `;
 
@@ -146,26 +144,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to celebrate a win
     function celebrateWin() {
-        // Start confetti
-        const confettiSettings = { 
-            target: 'confetti-canvas',
-            max: 200,
-            size: 1.5,
-            animate: true,
-            props: ['circle', 'square', 'triangle', 'line'],
-            colors: [[165, 104, 246], [230, 61, 135], [0, 199, 228], [253, 214, 126]],
-            clock: 25
-        };
-        const confetti = new ConfettiGenerator(confettiSettings);
-        confetti.render();
+        // Start confetti using canvas-confetti
+        const duration = 5000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        const interval = setInterval(function() {
+            const timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            const particleCount = 50 * (timeLeft / duration);
+            
+            // Confetti burst from both sides
+            confetti(Object.assign({}, defaults, {
+                particleCount,
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                colors: ['#D91D25', '#0F4B9E', '#008A17', '#F28C1F']
+            }));
+            
+            confetti(Object.assign({}, defaults, {
+                particleCount,
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                colors: ['#D91D25', '#0F4B9E', '#008A17', '#F28C1F']
+            }));
+        }, 250);
         
         // Show modal
         winnerModal.style.display = 'flex';
-        
-        // Set timeout to stop confetti after 5 seconds
-        setTimeout(() => {
-            confetti.clear();
-        }, 5000);
     }
 
     // Event listeners

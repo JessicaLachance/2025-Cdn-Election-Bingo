@@ -47,3 +47,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - These webpages and events were original generated using Claude 3.7 Sonnet, with modifications by me
 - This project is intended as a non-partisan and lighthearted way to practice coding with AI.
+- Icons provided by Bootstrap Icons
