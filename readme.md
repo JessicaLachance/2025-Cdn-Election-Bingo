@@ -13,7 +13,7 @@ An interactive web application that generates random bingo cards for Canadian fe
 
 ## How to Use
 
-1. Visit the [Canadian Election Bingo website](https://JessicaLachance.github.io/canadian-election-bingo/)
+1. Visit the [Canadian Election Bingo website](https://jessicalachance.github.io/2025-Cdn-Election-Bingo/)
 2. A random 5x5 bingo card will be generated with election night events
 3. As you watch election coverage, click/tap on a square when the event occurs
 4. Get 5 in a row (horizontally, vertically, or diagonally) to win!
@@ -24,7 +24,7 @@ An interactive web application that generates random bingo cards for Canadian fe
 To run the project locally:
 
 ```bash
-git clone https://github.com/JessicaLachance/canadian-election-bingo.git
+git clone https://jessicalachance.github.io/2025-Cdn-Election-Bingo/
 cd canadian-election-bingo
 # Open index.html in your browser
 ```
