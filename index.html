@@ -60,16 +60,45 @@
 
             <!-- Modal for Winner -->
             <div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="winnerModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header bg-danger text-white">
                             <h5 class="modal-title" id="winnerModalLabel">BINGO!</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body text-center py-4">
-                            <div class="display-1 mb-3"><i class="bi bi-trophy-fill text-warning"></i></div>
-                            <h2 class="fw-bold mb-3">Congratulations!</h2>
-                            <p class="lead mb-0">You've got a winning combination!</p>
+                        <div class="modal-body">
+                            <div class="text-center mb-4">
+                                <div class="display-1 mb-3"><i class="bi bi-trophy-fill text-warning"></i></div>
+                                <h2 class="fw-bold mb-3">Congratulations!</h2>
+                                <p class="lead">You've got a winning combination!</p>
+                            </div>
+                            
+                            <!-- Results display section -->
+                            <div class="card bg-light mb-4">
+                                <div class="card-body">
+                                    <h4 class="card-title">Your Bingo Results</h4>
+                                    
+                                    <!-- Emoji Grid -->
+                                    <div class="results-grid text-center fs-4 mb-3" id="resultsGrid">
+                                        <!-- Will be filled by JavaScript -->
+                                    </div>
+                                    
+                                    <!-- Events List -->
+                                    <div class="events-list" id="eventsList">
+                                        <!-- Will be filled by JavaScript -->
+                                    </div>
+                                    
+                                    <!-- Hidden textarea for copy functionality -->
+                                    <textarea id="resultContent" class="visually-hidden"></textarea>
+                                    
+                                    <!-- Copy button -->
+                                    <div class="text-center mt-4">
+                                        <button id="copyResults" class="btn btn-primary">
+                                            <i class="bi bi-clipboard me-2"></i>Copy Results
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -80,10 +109,14 @@
             </div>
         </main>
 
-        <footer class="text-center mt-5 text-muted">
-            <div class="mb-2">
-                <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/icons/flag.svg" alt="Canadian Flag" width="20" height="20" class="me-1">
-                <span>Created for Canadian Federal Election 2025</span>
+        <footer class="row justify-content-center text-center mt-5 text-muted">
+            <div class="col-md-12 col-lg-10 col-xl-8 mb-2">
+               <p><strong>Disclaimer:</strong> This Election Night Bingo game is designed as a nonpartisan activity intended 
+                to entertainment purposes and for the author to practice coding with AI as a personal project. 
+                The events listed represent common occurrences during Canadian election coverage as well as possible 
+                notable results. The inclusion or exclusion of any events does not indicate support for any political 
+                party or candidate. 
+            </p>
             </div>
             <p class="small">
                 <a href="https://github.com/JessicaLachance/2025-Cdn-Election-Bingo/" target="_blank" class="text-decoration-none">

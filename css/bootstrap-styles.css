@@ -93,6 +93,45 @@ h1 {
     border-top: 0;
 }
 
+/* Add these styles to your bootstrap-styles.css file */
+
+/* Results grid styling */
+.results-grid {
+    line-height: 1.3;
+    letter-spacing: 0.2em;
+    font-family: monospace;
+    max-width: 300px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+/* Events list styling */
+.events-list .list-group-item {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+/* Copy results button styling */
+#copyResults:focus {
+    box-shadow: none;
+}
+
+#copyResults.btn-success {
+    background-color: #008A17;
+    border-color: #008A17;
+}
+
+/* Make the emoji grid look even better on mobile */
+@media (max-width: 576px) {
+    .results-grid {
+        font-size: 1.2rem !important;
+        letter-spacing: 0.1em;
+        padding: 0.5rem;
+    }
+}
+
 @media (max-width: 760px) {
     
     /* Smaller BINGO header letters */

@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const newCardButton = document.getElementById('newCard');
     const resetMarksButton = document.getElementById('resetMarks');
     const newCardAfterWinButton = document.getElementById('newCardAfterWin');
+    const copyResultsButton = document.getElementById('copyResults');
     
     // Create Bootstrap Modal instance
     const winnerModalEl = document.getElementById('winnerModal');
@@ -84,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             if (rowWin) {
-                celebrateWin();
+                celebrateWin('row', row);
                 return;
             }
         }
@@ -104,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             if (colWin) {
-                celebrateWin();
+                celebrateWin('column', col);
                 return;
             }
         }
@@ -123,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         if (diag1Win) {
-            celebrateWin();
+            celebrateWin('diagonal', 1);
             return;
         }
         
@@ -140,12 +141,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         if (diag2Win) {
-            celebrateWin();
+            celebrateWin('diagonal', 2);
         }
     }
 
     // Function to celebrate a win
-    function celebrateWin() {
+    function celebrateWin(winType, winIndex) {
         // Start confetti using canvas-confetti
         const duration = 5000;
         const animationEnd = Date.now() + duration;
@@ -181,8 +182,135 @@ document.addEventListener('DOMContentLoaded', () => {
             }));
         }, 250);
         
+        // Generate the Wordle-style grid and list of events
+        generateBingoResults(winType, winIndex);
+        
         // Show Bootstrap modal
         winnerModal.show();
+    }
+
+    // Function to generate Wordle-style grid and list of events
+    function generateBingoResults(winType, winIndex) {
+        const cells = Array.from(document.querySelectorAll('.bingo-cell'));
+        const resultsGrid = document.getElementById('resultsGrid');
+        const eventsList = document.getElementById('eventsList');
+        const resultContent = document.getElementById('resultContent');
+        
+        // Clear previous content
+        resultsGrid.innerHTML = '';
+        eventsList.innerHTML = '';
+        
+        // Track which cells are part of the winning line
+        const winningCells = new Set();
+        const freeIndex = 12; // Center free space
+        
+        // Determine winning cells based on win type
+        if (winType === 'row') {
+            for (let col = 0; col < 5; col++) {
+                winningCells.add(winIndex * 5 + col);
+            }
+        } else if (winType === 'column') {
+            for (let row = 0; row < 5; row++) {
+                winningCells.add(row * 5 + winIndex);
+            }
+        } else if (winType === 'diagonal') {
+            if (winIndex === 1) {
+                // Top-left to bottom-right
+                for (let i = 0; i < 5; i++) {
+                    winningCells.add(i * 5 + i);
+                }
+            } else {
+                // Top-right to bottom-left
+                for (let i = 0; i < 5; i++) {
+                    winningCells.add(i * 5 + (4 - i));
+                }
+            }
+        }
+        
+        // Create the emoji grid
+        let emojiGrid = '';
+        let markedEvents = [];
+        
+        for (let row = 0; row < 5; row++) {
+            let emojiRow = '';
+            for (let col = 0; col < 5; col++) {
+                const index = row * 5 + col;
+                const cell = cells[index];
+                
+                // Check if this cell is marked (either explicitly or is the free space)
+                const isMarked = index === freeIndex || cell.classList.contains('marked');
+                
+                // Add the appropriate emoji
+                emojiRow += isMarked ? '🟥' : '⬜️';
+                
+                // Add to the list of marked events if this is part of the winning line
+                if (winningCells.has(index) && isMarked) {
+                    if (index === freeIndex) {
+                        markedEvents.push("FREE (Center Space)");
+                    } else {
+                        markedEvents.push(cell.textContent);
+                    }
+                }
+            }
+            emojiGrid += emojiRow + '<br>';
+        }
+        
+        // Determine win type display text
+        let winTypeText = '';
+        if (winType === 'row') {
+            winTypeText = `Row ${winIndex + 1}`;
+        } else if (winType === 'column') {
+            winTypeText = `Column ${winIndex + 1}`;
+        } else if (winType === 'diagonal') {
+            winTypeText = winIndex === 1 ? 'Diagonal (Top-left to Bottom-right)' : 'Diagonal (Top-right to Bottom-left)';
+        }
+        
+        // Update the results display
+        resultsGrid.innerHTML = emojiGrid;
+        
+        // Add the list of events
+        const eventHeader = document.createElement('h5');
+        eventHeader.textContent = 'Events You Marked:';
+        eventHeader.classList.add('mt-3', 'mb-2');
+        eventsList.appendChild(eventHeader);
+        
+        const eventUl = document.createElement('ul');
+        eventUl.classList.add('list-group');
+        
+        markedEvents.forEach(event => {
+            const eventLi = document.createElement('li');
+            eventLi.classList.add('list-group-item');
+            eventLi.textContent = event;
+            eventUl.appendChild(eventLi);
+        });
+        
+        eventsList.appendChild(eventUl);
+        
+        // Set the content for copying
+        const pageUrl = window.location.href;
+        const timestamp = new Date().toLocaleString();
+        resultContent.value = `Canadian Election Night Bingo - ${timestamp}\n\n${winTypeText} BINGO!\n\n${emojiGrid.replace(/<br>/g, '\n')}\n\nEvents Marked:\n${markedEvents.map(event => `• ${event}`).join('\n')}\n\nPlay your own election bingo: ${pageUrl}`;
+    }
+
+    // Function to copy results to clipboard
+    function copyResultsToClipboard() {
+        const resultContent = document.getElementById('resultContent');
+        resultContent.select();
+        document.execCommand('copy');
+        
+        // Show copied confirmation
+        const copyButton = document.getElementById('copyResults');
+        const originalText = copyButton.innerHTML;
+        copyButton.innerHTML = '<i class="bi bi-check-lg me-2"></i>Copied!';
+        copyButton.classList.remove('btn-primary');
+        copyButton.classList.add('btn-success');
+        
+        // Reset button after 2 seconds
+        setTimeout(() => {
+            copyButton.innerHTML = originalText;
+            copyButton.classList.remove('btn-success');
+            copyButton.classList.add('btn-primary');
+        }, 2000);
     }
 
     // Event listeners
@@ -192,6 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
         winnerModal.hide();
         generateBingoCard();
     });
+    copyResultsButton.addEventListener('click', copyResultsToClipboard);
     
     // When modal is hidden, clear confetti
     winnerModalEl.addEventListener('hidden.bs.modal', () => {
