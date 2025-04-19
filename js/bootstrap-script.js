@@ -314,12 +314,94 @@ Play your own bingo: ${pageUrl}`;
     // Function to copy results to clipboard
     function copyResultsToClipboard() {
         const resultContent = document.getElementById('resultContent');
-        resultContent.select();
-        document.execCommand('copy');
-        
-        // Show copied confirmation
         const copyButton = document.getElementById('copyResults');
         const originalText = copyButton.innerHTML;
+        
+        // Format for copying - simplified approach for better mobile compatibility
+        const pageUrl = window.location.href;
+        const timestamp = new Date().toLocaleString();
+        
+        // Create a simplified emoji grid - using spaces between emojis for better mobile display
+        const cells = Array.from(document.querySelectorAll('.bingo-cell'));
+        let simplifiedGrid = '';
+        
+        for (let row = 0; row < 5; row++) {
+            let rowEmojis = '';
+            for (let col = 0; col < 5; col++) {
+                const index = row * 5 + col;
+                const cell = cells[index];
+                const isMarked = index === 12 || cell.classList.contains('marked');
+                rowEmojis += isMarked ? '🟥 ' : '⬜️ ';
+            }
+            // Trim the trailing space and add a newline
+            simplifiedGrid += rowEmojis.trim() + '\n';
+        }
+        
+        // Get the list of marked events that are displayed
+        const eventItems = document.querySelectorAll('#eventsList .list-group-item');
+        const markedEvents = Array.from(eventItems).map(item => item.textContent);
+        
+        // Create the text to copy
+        const textToCopy = 
+`Canadian Election Night Bingo - ${timestamp}
+
+${simplifiedGrid}
+Events Marked:
+${markedEvents.map(event => `• ${event}`).join('\n')}
+
+Play your own bingo: ${pageUrl}`;
+
+        // Use modern clipboard API with fallback
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    showCopySuccess(copyButton, originalText);
+                })
+                .catch(err => {
+                    // Fallback to older method if permission denied or other error
+                    fallbackCopyTextToClipboard(textToCopy, copyButton, originalText);
+                });
+        } else {
+            // For older browsers that don't support clipboard API
+            fallbackCopyTextToClipboard(textToCopy, copyButton, originalText);
+        }
+    }
+    
+    // Fallback copy method using textarea
+    function fallbackCopyTextToClipboard(text, copyButton, originalText) {
+        const resultContent = document.getElementById('resultContent');
+        resultContent.value = text;
+        resultContent.style.position = 'fixed';
+        resultContent.style.left = '0';
+        resultContent.style.top = '0';
+        resultContent.style.opacity = '0';
+        resultContent.style.display = 'block';
+        resultContent.focus();
+        resultContent.select();
+        
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                showCopySuccess(copyButton, originalText);
+            } else {
+                copyButton.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>Error';
+                setTimeout(() => {
+                    copyButton.innerHTML = originalText;
+                }, 2000);
+            }
+        } catch (err) {
+            copyButton.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>Error';
+            setTimeout(() => {
+                copyButton.innerHTML = originalText;
+            }, 2000);
+        }
+        
+        // Hide the textarea again
+        resultContent.style.display = 'none';
+    }
+    
+    // Show success feedback
+    function showCopySuccess(copyButton, originalText) {
         copyButton.innerHTML = '<i class="bi bi-check-lg me-2"></i>Copied!';
         copyButton.classList.remove('btn-primary');
         copyButton.classList.add('btn-success');

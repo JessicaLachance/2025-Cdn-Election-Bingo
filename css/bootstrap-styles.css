@@ -191,3 +191,53 @@ h1 {
     }
 
   }
+
+  /* Add these styles to your bootstrap-styles.css file */
+
+/* Results grid styling */
+.results-grid {
+    line-height: 1.5;
+    letter-spacing: 0.2em;
+    font-family: monospace;
+    max-width: 300px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+/* Hidden textarea for clipboard operations */
+#resultContent {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+}
+
+/* Events list styling */
+.events-list .list-group-item {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+
+/* Copy results button styling */
+#copyResults:focus {
+    box-shadow: none;
+}
+
+#copyResults.btn-success {
+    background-color: #008A17;
+    border-color: #008A17;
+}
+
+/* Make the emoji grid look even better on mobile */
+@media (max-width: 576px) {
+    .results-grid {
+        font-size: 1.2rem !important;
+        letter-spacing: 0.1em;
+        padding: 0.5rem;
+    }
+}
