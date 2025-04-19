@@ -289,7 +289,26 @@ document.addEventListener('DOMContentLoaded', () => {
         // Set the content for copying
         const pageUrl = window.location.href;
         const timestamp = new Date().toLocaleString();
-        resultContent.value = `Canadian Election Night Bingo - ${timestamp}\n\n${winTypeText} BINGO!\n\n${emojiGrid.replace(/<br>/g, '\n')}\n\nEvents Marked:\n${markedEvents.map(event => `• ${event}`).join('\n')}\n\nPlay your own election bingo: ${pageUrl}`;
+        
+        // Format emoji grid with no line breaks for better messaging app compatibility
+        // Each row on its own line with no extra spacing
+        const cleanEmojiGrid = emojiGrid
+            .replace(/<br>/g, '\n')        // Replace HTML breaks with newlines
+            .replace(/\n+/g, '\n')         // Remove any double newlines
+            .trim();                        // Remove any leading/trailing whitespace
+        
+        // Format the result text for better display in messaging apps
+        resultContent.value = 
+`Canadian Election Night Bingo - ${timestamp}
+
+${winTypeText} BINGO!
+
+${cleanEmojiGrid}
+
+Events Marked:
+${markedEvents.map(event => `• ${event}`).join('\n')}
+
+Play your own bingo: ${pageUrl}`;
     }
 
     // Function to copy results to clipboard
